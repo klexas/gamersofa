@@ -1,0 +1,7 @@
+{
+    "hub": {
+        "host": "localhost",
+        "port": 6968
+    },
+    "serviceName": "userService"
+}
