@@ -1,10 +1,10 @@
 var config = require('./common/config');
 var launcher = require('./common/launcher');
+var builder = require('./services/builder');
 var consts = require('./common/constants');
 var config = require('./common/config');
 var express = require('express');
 var cors = require('cors');
-var http = require('http');
 
 var userService = require('./services/userService/main');
 var serviceReferences = {};
@@ -19,12 +19,25 @@ app.get('/api', ((req, res)=> {
     res.status(500).send('No direct access allowed.');
 }));
 
-app.get('/api/test', ((req, res)=>{
+app.get('/api/start', ((req, res)=>{
     console.log('Tester ... getting services');
+    let serviceOutput = '';
+    Object.keys(consts).forEach(service => {
+        try {
+            launcher.launch(consts[service]);
+            serviceOutput += '\r<br /> Starting service :  ' + consts[service];  
+        } catch (error) {
+            console.error(error);
+        }
+    });
+    res.send(serviceOutput);
 
-    serviceReferences.userService = userService.init(express);
+}))
 
-    res.send('UserService started');
+app.get('/api/service/create/:name', ((req, res)=>{
+    console.info('Creating new Service : ' + req.params.name);
+    builder.newService(req.params.name);
+    res.send('Done');
 }))
 
 app.get('/api/userService/close', ((req, res)=>{

@@ -24,12 +24,12 @@ function init(express){
         userService_connection: app_reference,
         response: 'UserService online'
     };
-}   
-
+}
 
 function shut_down(){
     httpTerminator.terminate();
 }
+
 module.exports = { 
     init,
     shut_down

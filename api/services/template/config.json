@@ -1,0 +1,7 @@
+{
+    "hub": {
+        "host": "{host}",
+        "port": "{port}"
+    },
+    "serviceName": "{serviceName}"
+}
